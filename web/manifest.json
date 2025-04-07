@@ -1,0 +1,20 @@
+{
+    "name": "LWF",
+    "short_name": "LWF",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#0175C2",
+    "theme_color": "#0175C2",
+    "description": "Relaisleitungsrechner",
+    "orientation": "portrait-primary",
+    "prefer_related_applications": false,
+    "icons": [
+        {
+            "src": "./assets/assets/icons/icon.png",
+            "sizes": "91x91",
+            "type": "image/png"
+        }
+    ],
+    "lang": "de",
+    "scope": "/"
+}
