@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:loeschwasserfoerderung/video_player_widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'external_link.dart';
 import 'support_page.dart';
@@ -20,21 +21,19 @@ class InfoPageState extends State<InfoPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        //NavBar
-        appBar: AppBar(
-          backgroundColor: Colors.grey[800],
-          foregroundColor: Colors.white,
-          title: const Text("Info"),
-        ),
-        resizeToAvoidBottomInset: true,
-        //Body
-        body: LayoutBuilder(
-          builder: (context, constraints) {
-            return SingleChildScrollView(
-                child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: constraints.maxHeight,
-              ),
+      //NavBar
+      appBar: AppBar(
+        backgroundColor: Colors.grey[800],
+        foregroundColor: Colors.white,
+        title: const Text("Info"),
+      ),
+      resizeToAvoidBottomInset: true,
+      //Body
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(minHeight: constraints.maxHeight),
               child: IntrinsicHeight(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -42,10 +41,19 @@ class InfoPageState extends State<InfoPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+                      //Trailer - Headline
+                      const Text(
+                        "Trailer",
+                        style: TextStyle(fontSize: 20.0, color: Colors.deepOrange),
+                        textAlign: TextAlign.center,
+                      ),
+                      //VideoPlayer
+                      VideoPlayerWidget(videoUrl: "https://xn--lschwasserfrderung-d3bk.at/trailer.mp4", volume: 20, width: 300, height: 200),
+                      const SizedBox(height: 20.0),
                       //Service & Information - Headline
                       const Text(
                         "Service und Information",
-                        style: TextStyle(fontSize: 20.0),
+                        style: TextStyle(fontSize: 20.0, color: Colors.deepOrange),
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 10.0),
@@ -61,26 +69,33 @@ class InfoPageState extends State<InfoPage> {
                                 const TextSpan(
                                   text: "E-Mail: ",
                                   style: TextStyle(
-                                      color: Colors.black, fontSize: 16.0),
+                                    color: Colors.black,
+                                    fontSize: 16.0,
+                                  ),
                                 ),
                                 TextSpan(
                                   text: "support@löschwasserförderung.at",
                                   style: const TextStyle(
-                                      color: Colors.blue,
-                                      fontSize: 16.0,
-                                      decoration: TextDecoration.underline),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      launchUrl(Uri.parse(
-                                          "mailto:support@löschwasserförderung.at"));
-                                    },
+                                    color: Colors.blue,
+                                    fontSize: 16.0,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                  recognizer:
+                                      TapGestureRecognizer()
+                                        ..onTap = () {
+                                          launchUrl(
+                                            Uri.parse(
+                                              "mailto:support@löschwasserförderung.at",
+                                            ),
+                                          );
+                                        },
                                 ),
                               ],
                             ),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 5.0),
+                      const SizedBox(height: 10.0),
                       //Service & Information - Telephone
                       Center(
                         //Tooltip when hovering over Text
@@ -93,33 +108,40 @@ class InfoPageState extends State<InfoPage> {
                                 const TextSpan(
                                   text: "Telefon: ",
                                   style: TextStyle(
-                                      color: Colors.black, fontSize: 16.0),
+                                    color: Colors.black,
+                                    fontSize: 16.0,
+                                  ),
                                 ),
                                 TextSpan(
                                   text: "06604 122 122",
                                   style: const TextStyle(
-                                      color: Colors.blue,
-                                      fontSize: 16.0,
-                                      decoration: TextDecoration.underline),
-                                  recognizer: TapGestureRecognizer()
-                                    ..onTap = () {
-                                      launchUrl(Uri.parse("tel:+436604122122"));
-                                    },
+                                    color: Colors.blue,
+                                    fontSize: 16.0,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                  recognizer:
+                                      TapGestureRecognizer()
+                                        ..onTap = () {
+                                          launchUrl(
+                                            Uri.parse("tel:+436604122122"),
+                                          );
+                                        },
                                 ),
                               ],
                             ),
                           ),
                         ),
                       ),
-                      const SizedBox(height: 5.0),
+                      const SizedBox(height: 10.0),
                       //Service & Information - Support Formular
                       Center(
                         child: Tooltip(
                           message: "Support Formular öffnen",
                           child: ElevatedButton(
                             onPressed: () async {
-                              ScaffoldMessenger.of(context)
-                                  .removeCurrentSnackBar();
+                              ScaffoldMessenger.of(
+                                context,
+                              ).removeCurrentSnackBar();
                               await Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -140,17 +162,24 @@ class InfoPageState extends State<InfoPage> {
                             ),
                             child: const Text(
                               "Support Formular",
-                              style:
-                                  TextStyle(fontSize: 14, color: Colors.black),
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                              ),
                             ),
                           ),
                         ),
                       ),
                       const SizedBox(height: 20.0),
                       //Vision - Headline
-                      const Text("Vision",
-                          style: TextStyle(fontSize: 20.0),
-                          textAlign: TextAlign.center),
+                      const Text(
+                        "Vision",
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.deepOrange,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                       const SizedBox(height: 5.0),
                       // Vision - Text
                       const Text(
@@ -160,9 +189,14 @@ class InfoPageState extends State<InfoPage> {
                       ),
                       const SizedBox(height: 20.0),
                       //Information - Headline
-                      const Text("Informationen",
-                          style: TextStyle(fontSize: 20.0),
-                          textAlign: TextAlign.center),
+                      const Text(
+                        "Informationen",
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.deepOrange,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                       const SizedBox(height: 5.0),
                       // Information - Text
                       const Text(
@@ -186,14 +220,24 @@ class InfoPageState extends State<InfoPage> {
                       ),
                       const SizedBox(height: 20.0),
                       //Description - Headline
-                      const Text("Beschreibung",
-                          style: TextStyle(fontSize: 20.0),
-                          textAlign: TextAlign.center),
+                      const Text(
+                        "Beschreibung",
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.deepOrange,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                       const SizedBox(height: 5.0),
                       //Description - Subheading
-                      const Text("Start- und Endpunkt",
-                          style: TextStyle(fontSize: 15.0),
-                          textAlign: TextAlign.center),
+                      const Text(
+                        "Start- und Endpunkt",
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          color: Colors.deepOrange,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                       const SizedBox(height: 5.0),
                       //Description Startpoint - Text
                       RichText(
@@ -202,8 +246,9 @@ class InfoPageState extends State<InfoPage> {
                           style: TextStyle(fontSize: 12.0, color: Colors.black),
                           children: [
                             TextSpan(
-                                text:
-                                    "Der Startpunkt der Relaisleitung wird mit Klick auf die Karte gesetzt (ausgenommen "),
+                              text:
+                                  "Der Startpunkt der Relaisleitung wird mit Klick auf die Karte gesetzt (ausgenommen ",
+                            ),
                             TextSpan(
                               text: "Startpunkt ist Standort",
                               style: TextStyle(fontWeight: FontWeight.bold),
@@ -230,15 +275,17 @@ class InfoPageState extends State<InfoPage> {
                           style: TextStyle(fontSize: 12.0, color: Colors.black),
                           children: [
                             TextSpan(
-                                text:
-                                    "Der Startpunkt einer Relaisleitung kann auch per Klick auf den Knopf "),
+                              text:
+                                  "Der Startpunkt einer Relaisleitung kann auch per Klick auf den Knopf ",
+                            ),
                             TextSpan(
                               text: "Startpunkt setzen",
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             TextSpan(
-                                text:
-                                    " in einer Wasserentnahmestelle gesetzt werden"),
+                              text:
+                                  " in einer Wasserentnahmestelle gesetzt werden",
+                            ),
                           ],
                         ),
                       ),
@@ -250,8 +297,9 @@ class InfoPageState extends State<InfoPage> {
                           style: TextStyle(fontSize: 12.0, color: Colors.black),
                           children: [
                             TextSpan(
-                                text:
-                                    "Der Endpunkt wird mit dem zweiten Klick auf die Karte gesetzt (ausgenommen "),
+                              text:
+                                  "Der Endpunkt wird mit dem zweiten Klick auf die Karte gesetzt (ausgenommen ",
+                            ),
                             TextSpan(
                               text: "Startpunkt is Standort",
                               style: TextStyle(fontWeight: FontWeight.bold),
@@ -277,9 +325,14 @@ class InfoPageState extends State<InfoPage> {
                       ),
                       const SizedBox(height: 15.0),
                       //Description - Subheading
-                      const Text("Löschen und Informationen",
-                          style: TextStyle(fontSize: 15.0),
-                          textAlign: TextAlign.center),
+                      const Text(
+                        "Löschen und Informationen",
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          color: Colors.deepOrange,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                       const SizedBox(height: 5.0),
                       //Description - Text
                       const Text(
@@ -300,8 +353,9 @@ class InfoPageState extends State<InfoPage> {
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             TextSpan(
-                                text:
-                                    " kann ein Zwischenpunkt mit Klick auf diesen gelöscht werden")
+                              text:
+                                  " kann ein Zwischenpunkt mit Klick auf diesen gelöscht werden",
+                            ),
                           ],
                         ),
                       ),
@@ -320,13 +374,14 @@ class InfoPageState extends State<InfoPage> {
                           style: TextStyle(fontSize: 12.0, color: Colors.black),
                           children: [
                             TextSpan(
-                                text:
-                                    "Die Informationen einer Wasserentnahmestelle können mit Klick auf diese angezeigt werden ("),
+                              text:
+                                  "Die Informationen einer Wasserentnahmestelle können mit Klick auf diese angezeigt werden (",
+                            ),
                             TextSpan(
                               text: "nur für angemeldete Benutzer",
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
-                            TextSpan(text: ")")
+                            TextSpan(text: ")"),
                           ],
                         ),
                       ),
@@ -339,9 +394,14 @@ class InfoPageState extends State<InfoPage> {
                       ),
                       const SizedBox(height: 15.0),
                       //Description - Subheading
-                      const Text("Ortssuche",
-                          style: TextStyle(fontSize: 15.0),
-                          textAlign: TextAlign.center),
+                      const Text(
+                        "Ortssuche",
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          color: Colors.deepOrange,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                       const SizedBox(height: 5.0),
                       //Description - Text
                       const Text(
@@ -358,9 +418,14 @@ class InfoPageState extends State<InfoPage> {
                       ),
                       const SizedBox(height: 15.0),
                       //Description - Subheading
-                      const Text("Modis",
-                          style: TextStyle(fontSize: 15.0),
-                          textAlign: TextAlign.center),
+                      const Text(
+                        "Modis",
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          color: Colors.deepOrange,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                       const SizedBox(height: 5.0),
                       //Description - Text
                       const Text(
@@ -381,8 +446,9 @@ class InfoPageState extends State<InfoPage> {
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             TextSpan(
-                                text:
-                                    ": Zeichnet die Relaisleitung entlang der nächstgelegenen Straße/Weg")
+                              text:
+                                  ": Zeichnet die Relaisleitung entlang der nächstgelegenen Straße/Weg",
+                            ),
                           ],
                         ),
                       ),
@@ -399,8 +465,9 @@ class InfoPageState extends State<InfoPage> {
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             TextSpan(
-                                text:
-                                    ": Zeichnet eine Gerade Linie vom Start- bis zum Endpunkt")
+                              text:
+                                  ": Zeichnet eine Gerade Linie vom Start- bis zum Endpunkt",
+                            ),
                           ],
                         ),
                       ),
@@ -417,8 +484,9 @@ class InfoPageState extends State<InfoPage> {
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             TextSpan(
-                                text:
-                                    ": Zeichnet eine Gerade Linie mit beliebig vielen Eckpunkten")
+                              text:
+                                  ": Zeichnet eine Gerade Linie mit beliebig vielen Eckpunkten",
+                            ),
                           ],
                         ),
                       ),
@@ -435,8 +503,9 @@ class InfoPageState extends State<InfoPage> {
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             TextSpan(
-                                text:
-                                    ": Zeichnet die Linie entlang der Benutzerbewegung auf")
+                              text:
+                                  ": Zeichnet die Linie entlang der Benutzerbewegung auf",
+                            ),
                           ],
                         ),
                       ),
@@ -453,79 +522,199 @@ class InfoPageState extends State<InfoPage> {
                               style: TextStyle(fontWeight: FontWeight.bold),
                             ),
                             TextSpan(
-                                text:
-                                    ": Zeichnet die Linie entlang der Benutzerbewegung, Benutzer kann aber manuell Pumpen setzen")
+                              text:
+                                  ": Zeichnet die Linie entlang der Benutzerbewegung, Benutzer kann aber manuell Pumpen setzen",
+                            ),
                           ],
                         ),
                       ),
                       const SizedBox(height: 20.0),
-                      //Development - Headline
-                      const Text("Entwicklung",
-                          style: TextStyle(fontSize: 20.0),
-                          textAlign: TextAlign.center),
+                      //Team - Headline
+                      const Text(
+                        "Team",
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.deepOrange,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                       const SizedBox(height: 5.0),
-                      //Development - Text
+                      //Team - Subheading
+                      const Text(
+                        "Entwicklung",
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          color: Colors.deepOrange,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      //Team - Development - Name
                       const ExternalLink(
-                          url: "https://stefanrautner.netlify.app",
-                          text: "Stefan Rautner (FF Kuchl)"),
+                        url: "https://stefanrautner.netlify.app",
+                        text: "Stefan Rautner (FF Kuchl)",
+                      ),
+                      const SizedBox(height: 15.0),
+                      const Text(
+                        "Projektuntersützung",
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          color: Colors.deepOrange,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 5.0),
+                      //Team - Development-support - Name
+                      const ExternalLink(
+                        url: "https://www.florian-bischof.at",
+                        text: "Florian Bischof (FF Kennelbach)",
+                      ),
+                      const SizedBox(height: 5.0),
+                      //Team - Development-support - Name
+                      const ExternalLink(
+                        url: "https://www.shofer.at/",
+                        text: "Stefan Hofer (FF Saalfelden)",
+                      ),
+                      const SizedBox(height: 5.0),
+                      //Team - Development-support - Name<
+                      const ExternalLink(
+                        url: "https://voetter.info/",
+                        text: "Stefan Vötter (FF Kuchl)",
+                      ),
+                      const SizedBox(height: 15.0),
+                      const Text(
+                        "Trailer",
+                        style: TextStyle(
+                          fontSize: 15.0,
+                          color: Colors.deepOrange,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 5.0),
+                      //Team - Trailer - Name
+                      const Text(
+                        "Felix Aigner (FF Kuchl)",
+                        style: TextStyle(fontSize: 12.0),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 5.0),
+                      //Team - Trailer - Name
+                      const Text(
+                        "Pierre Aigner (FF Kuchl)",
+                        style: TextStyle(fontSize: 12.0),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 5.0),
+                      //Team - Trailer - Name
+                      const Text(
+                        "Pascal Herbst (FF Kuchl)",
+                        style: TextStyle(fontSize: 12.0),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 5.0),
+                      //Team - Trailer - Name
+                      const Text(
+                        "Tobias Höllbacher (FF Kuchl)",
+                        style: TextStyle(fontSize: 12.0),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 5.0),
+                      //Team - Trailer - Name
+                      const Text(
+                        "Felix Schwaiger (FF Kuchl)",
+                        style: TextStyle(fontSize: 12.0),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 5.0),
+                      //Team - Trailer - Name
+                      const Text(
+                        "Jakob Volleritsch (FF Kuchl)",
+                        style: TextStyle(fontSize: 12.0),
+                        textAlign: TextAlign.center,
+                      ),
                       const SizedBox(height: 20.0),
                       //Sources - Headline
-                      const Text("Datenquelle",
-                          style: TextStyle(fontSize: 20.0),
-                          textAlign: TextAlign.center),
+                      const Text(
+                        "Datenquelle",
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.deepOrange,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                       const SizedBox(height: 5.0),
                       //Sources - Map
                       const ExternalLink(
-                          url: "https://www.openstreetmap.org", text: "Karte"),
+                        url: "https://www.openstreetmap.org",
+                        text: "Karte",
+                      ),
                       const SizedBox(height: 10.0),
                       //Sources - Elevation
                       const ExternalLink(
-                          url: "https://elevation.geocode.at",
-                          text: "Berechnung Relaisleitung"),
+                        url: "https://elevation.geocode.at",
+                        text: "Berechnung Relaisleitung",
+                      ),
                       const SizedBox(height: 10.0),
                       //Sources - Routing
                       const ExternalLink(
-                          url: "https://routing.openstreetmap.de",
-                          text: "Routenberechnung"),
+                        url: "https://routing.openstreetmap.de",
+                        text: "Routenberechnung",
+                      ),
                       const SizedBox(height: 10.0),
                       //Sources - Hydrants
                       const ExternalLink(
-                          url:
-                              "https://www.overpass-api.de" /*"https://www.objektdatenbank.at"*/,
-                          text: "Wasserentnahmestellen"),
+                        url:
+                            "https://www.overpass-api.de" /*"https://www.objektdatenbank.at"*/,
+                        text: "Wasserentnahmestellen",
+                      ),
                       const SizedBox(height: 10.0),
                       //Sources - Locations
                       const ExternalLink(
-                          url: "https://www.geocode.at",
-                          text: "Address- und Hofnamensuche"),
+                        url: "https://www.geocode.at",
+                        text: "Address- und Hofnamensuche",
+                      ),
                       const SizedBox(height: 10.0),
                       //Missing Hydrants - Headline
-                      const Text("Fehlende Wasserentnahmestellen?",
-                          style: TextStyle(fontSize: 20.0),
-                          textAlign: TextAlign.center),
+                      const Text(
+                        "Fehlende Wasserentnahmestellen?",
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.deepOrange,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                       const SizedBox(height: 5.0),
                       //Missing Hydrants - Text
                       const ExternalLink(
-                          url: "https://www.osmhydrant.org/beta",
-                          text:
-                              "Bitte hier einfügen (https://www.osmhydrant.org/beta)"),
+                        url: "https://www.osmhydrant.org/beta",
+                        text:
+                            "Bitte hier einfügen (https://www.osmhydrant.org/beta)",
+                      ),
                       const SizedBox(height: 20.0),
                       //Version - Headline
-                      const Text("Version",
-                          style: TextStyle(fontSize: 20.0),
-                          textAlign: TextAlign.center),
+                      const Text(
+                        "Version",
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          color: Colors.deepOrange,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
                       const SizedBox(height: 5.0),
                       //Version - Text
-                      Text("1.29.56",
-                          style: TextStyle(fontSize: 12.0),
-                          textAlign: TextAlign.center),
-                      const SizedBox(height: 10)
+                      Text(
+                        "1.31.56",
+                        style: TextStyle(fontSize: 12.0),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 10),
                     ],
                   ),
                 ),
               ),
-            ));
-          },
-        ));
+            ),
+          );
+        },
+      ),
+    );
   }
 }

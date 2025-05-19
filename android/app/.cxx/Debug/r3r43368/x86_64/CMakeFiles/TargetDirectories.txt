@@ -1,0 +1,2 @@
+C:/Users/stefa/OneDrive/Desktop/andere/Schule/Matura/diplomarbeit/android/app/.cxx/Debug/r3r43368/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/stefa/OneDrive/Desktop/andere/Schule/Matura/diplomarbeit/android/app/.cxx/Debug/r3r43368/x86_64/CMakeFiles/rebuild_cache.dir

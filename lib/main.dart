@@ -368,8 +368,8 @@ class MyHomePageState extends State<MyHomePage> {
               .toStringAsFixed(2));
       numberOfHoses = decodedResponse["p_schlauch_nr"].last;
       numberOfNeededBar = decodedResponse["p_bar"].last;
-      while (numberOfNeededBar > 8) {
-        numberOfNeededBar -= 8;
+      while (numberOfNeededBar > maxPressureLoss) {
+        numberOfNeededBar -= maxPressureLoss;
       }
 
       for (int i = 0; i < latKoords.length; i++) {
@@ -1118,7 +1118,7 @@ class MyHomePageState extends State<MyHomePage> {
             title: LayoutBuilder(builder: (context, constraints) {
               if (constraints.maxWidth < 600) {
                 return Row(children: [
-                  Image.asset("assets/icons/logo.png", height: 60),
+                  Image.asset("assets/icons/icon.png", height: 40),
                   const Spacer(),
                   //Reload
                   AnimatedRotation(
@@ -1127,26 +1127,48 @@ class MyHomePageState extends State<MyHomePage> {
                       child: IconButton(
                         icon: const Icon(Icons.refresh),
                         onPressed: () {
-                          setState(() {
-                            mapKey = UniqueKey();
-                            mapController.move(userLocation!, zoomLevel);
-                            mapController.rotate(0.0);
-                            mapHeadingNotifier.value = 0.0;
-                            lineList = [];
-                            tsList = [];
-                            modeLineList = [];
-                            startLocation = null;
-                            pointListFree = [];
-                            pointListRecord = [];
-                            partPointListHybrid = [];
-                            pointListHybrid = [];
-                            foundPosition = null;
+                          showDialog<bool>(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: const Text('Karte neu laden'),
+                              content: const Text('Möchtest du die Karte wirklich neu laden? Alle Daten werden zurückgesetzt'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.of(context).pop(false),
+                                  child: const Text('Abbrechen'),
+                                ),
+                                TextButton(
+                                  onPressed: () => Navigator.of(context).pop(true),
+                                  child: const Text('Ja, neu laden'),
+                                ),
+                              ],
+                            ),
+                          ).then((confirm) {
+                            if(confirm == true) {
+                              setState(() {
+                                mapKey = UniqueKey();
+                                mapController.move(userLocation!, zoomLevel);
+                                mapController.rotate(0.0);
+                                mapHeadingNotifier.value = 0.0;
+                                lineList = [];
+                                tsList = [];
+                                modeLineList = [];
+                                startLocation = null;
+                                pointListFree = [];
+                                pointListRecord = [];
+                                partPointListHybrid = [];
+                                pointListHybrid = [];
+                                foundPosition = null;
+                              });
+
+                              reloadTurn += 1.0;
+                              startPoint = null;
+                              endPoint = null;
+
+                              pathRecoveryAutoClick?.cancel();
+                              pathRecoveryAutoClick = null;
+                            }
                           });
-                          reloadTurn += 1.0;
-                          startPoint = null;
-                          endPoint = null;
-                          pathRecoveryAutoClick?.cancel();
-                          pathRecoveryAutoClick = null;
                         },
                       )),
                   //Compass
@@ -1178,7 +1200,7 @@ class MyHomePageState extends State<MyHomePage> {
                 ]);
               } else {
                 return Row(children: [
-                  Image.asset("assets/icons/logo.png", height: 60),
+                  Image.asset("assets/icons/icon.png", height: 40),
                   const SizedBox(width: 8),
                   const Spacer(),
                   //Reload
@@ -1186,26 +1208,52 @@ class MyHomePageState extends State<MyHomePage> {
                       turns: reloadTurn,
                       duration: const Duration(seconds: 1),
                       child: IconButton(
-                          icon: const Icon(Icons.refresh),
-                          onPressed: () {
-                            setState(() {
-                              mapKey = UniqueKey();
-                              mapController.move(userLocation!, zoomLevel);
-                              mapController.rotate(0.0);
-                              mapHeadingNotifier.value = 0.0;
-                              lineList = [];
-                              tsList = [];
-                              modeLineList = [];
-                              startLocation = null;
-                              pointListFree = [];
-                              pointListRecord = [];
-                            });
-                            reloadTurn += 1.0;
-                            startPoint = null;
-                            endPoint = null;
-                            pathRecoveryAutoClick?.cancel();
-                            pathRecoveryAutoClick = null;
-                          })),
+                        icon: const Icon(Icons.refresh),
+                        onPressed: () {
+                          showDialog<bool>(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: const Text('Karte neu laden'),
+                              content: const Text('Möchtest du die Karte wirklich neu laden? Alle Daten werden zurückgesetzt'),
+                              actions: [
+                                TextButton(
+                                  onPressed: () => Navigator.of(context).pop(false),
+                                  child: const Text('Abbrechen'),
+                                ),
+                                TextButton(
+                                  onPressed: () => Navigator.of(context).pop(true),
+                                  child: const Text('Ja, neu laden'),
+                                ),
+                              ],
+                            ),
+                          ).then((confirm) {
+                            if(confirm == true) {
+                              setState(() {
+                                mapKey = UniqueKey();
+                                mapController.move(userLocation!, zoomLevel);
+                                mapController.rotate(0.0);
+                                mapHeadingNotifier.value = 0.0;
+                                lineList = [];
+                                tsList = [];
+                                modeLineList = [];
+                                startLocation = null;
+                                pointListFree = [];
+                                pointListRecord = [];
+                                partPointListHybrid = [];
+                                pointListHybrid = [];
+                                foundPosition = null;
+                              });
+
+                              reloadTurn += 1.0;
+                              startPoint = null;
+                              endPoint = null;
+
+                              pathRecoveryAutoClick?.cancel();
+                              pathRecoveryAutoClick = null;
+                            }
+                          });
+                        },
+                      )),
                   //Compass
                   ValueListenableBuilder<double>(
                       valueListenable: mapHeadingNotifier,

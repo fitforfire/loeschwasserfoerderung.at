@@ -3,7 +3,7 @@
 name: loeschwasserfoerderung
 description: "Applikation zur automatischen Berechnung von Relaisleitungen"
 publish_to: 'none'
-version: 1.29.56
+version: 1.31.56
 
 environment:
   sdk: ^3.7.0
@@ -45,6 +45,10 @@ dependencies:
   #Encrypt/Decrypt
   crypto: ^3.0.6
   encrypt: ^5.0.3
+  #Trailer
+  media_kit: ^1.2.0
+  media_kit_video: ^1.3.0
+  media_kit_libs_video: ^1.0.6
 
 dev_dependencies:
   flutter_test:
@@ -60,7 +64,7 @@ flutter_launcher_icons:
 flutter:
   assets:
     - assets/icons/icon.png
-    - assets/icons/logo.png
+    - assets/icons/icon.ico
     - assets/sounds/notification.mp3
     - assets/config/.env
     - assets/config/.env_web

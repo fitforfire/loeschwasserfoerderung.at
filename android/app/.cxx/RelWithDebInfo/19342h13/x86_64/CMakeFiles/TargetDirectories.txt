@@ -1,0 +1,2 @@
+C:/Users/stefa/OneDrive/Desktop/5AHINF/Diplomarbeit/android/app/.cxx/RelWithDebInfo/19342h13/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/stefa/OneDrive/Desktop/5AHINF/Diplomarbeit/android/app/.cxx/RelWithDebInfo/19342h13/x86_64/CMakeFiles/rebuild_cache.dir
