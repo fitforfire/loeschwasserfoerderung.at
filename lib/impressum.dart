@@ -702,7 +702,7 @@ class InfoPageState extends State<InfoPage> {
                       const SizedBox(height: 5.0),
                       //Version - Text
                       Text(
-                        "1.31.56",
+                        "1.31.57",
                         style: TextStyle(fontSize: 12.0),
                         textAlign: TextAlign.center,
                       ),

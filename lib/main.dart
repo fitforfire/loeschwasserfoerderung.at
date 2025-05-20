@@ -794,8 +794,8 @@ class MyHomePageState extends State<MyHomePage> {
           [bounds.south, bounds.west, bounds.north, bounds.east].join(',');
       List<List<dynamic>> waterIntakePointsList = [];
 
-      //TODO: Implement Objektdatenbank and make if right again and make Types right (line 938-973)
-      if (!loggedIn || true) {
+      //Load WaterIntakePoints depending, if user is logged in or not
+      if (!loggedIn || true) { //TODO: remove true
         try {
           final url =
               'https://overpass-api.de/api/interpreter?data=[out:json][timeout:25]; '

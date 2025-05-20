@@ -27,7 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Variables
     $username = trim($inputData['username']);
     $password = trim($inputData['password']);
-    $dbToken = 'static_token_1';
 
     try {
         // Prepare and execute query to find user by username
@@ -40,7 +39,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Verify user exists and password is correct
         if ($user_data && $user_data['password'] === $password) {
             // If yes, return encrypted token
-            echo Crypto::encrypt(json_encode(['dbToken' => $dbToken]));
+
+            // Get Token from Database
+            $tokenStmt = $conn->prepare("SELECT token FROM Tokens WHERE id = ?");
+            $tokenId = 'objectDatabase_token';
+            $tokenStmt->bind_param("s", $tokenId);
+            $tokenStmt->execute();
+            $tokenResult = $tokenStmt->get_result();
+            $tokenData = $tokenResult->fetch_assoc();
+
+            echo Crypto::encrypt(json_encode(['dbToken' => $tokenData['token']]));
             http_response_code(200);
         } else {
             // Incorrect username or password
