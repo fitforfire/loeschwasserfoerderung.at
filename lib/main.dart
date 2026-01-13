@@ -7,7 +7,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:flutter_map_cancellable_tile_provider/flutter_map_cancellable_tile_provider.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:loeschwasserfoerderung/search_location_marker.dart';
 import 'package:loeschwasserfoerderung/support_notificator.dart';
@@ -523,7 +522,7 @@ class MyHomePageState extends State<MyHomePage> {
     loadingScreenShown = true;
     Navigator.of(context).push(PageRouteBuilder(
       opaque: false,
-      pageBuilder: (_, __, ___) => const LoadingScreen(),
+      pageBuilder: (_, _, _) => const LoadingScreen(),
     ));
   }
 
@@ -2009,9 +2008,8 @@ class MyHomePageState extends State<MyHomePage> {
                     children: [
                       //Layer for the Map
                       TileLayer(
-                        tileProvider: CancellableNetworkTileProvider(),
-                        urlTemplate:
-                            "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                        urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                        userAgentPackageName: 'at.team122.loeschwasserfoerderung',
                       ),
                       //Layer for the RelayLines
                       PolylineLayer(polylines: loadLines()),

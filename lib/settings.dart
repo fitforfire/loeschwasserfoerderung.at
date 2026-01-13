@@ -137,7 +137,7 @@ class SettingsPageState extends State<SettingsPage> {
       barrierDismissible: true,
       builder: (BuildContext context) {
         return Theme(
-          data: Theme.of(context).copyWith(dialogBackgroundColor: Colors.white),
+          data: Theme.of(context).copyWith(dialogTheme: DialogThemeData(backgroundColor: Colors.white)),
           child: Container(
             color: Colors.red,
             child: AlertDialog(
@@ -230,7 +230,7 @@ class SettingsPageState extends State<SettingsPage> {
                   width: 150.0,
                   child: DropdownButtonFormField<double>(
                     isExpanded: true,
-                    value: zoomLevel,
+                    initialValue: zoomLevel,
                     onChanged: (double? newValue) {
                       if (newValue != null) {
                         setState(() {
@@ -260,7 +260,7 @@ class SettingsPageState extends State<SettingsPage> {
                   width: 200.0,
                   child: DropdownButtonFormField<int>(
                     isExpanded: true,
-                    value: mode,
+                    initialValue: mode,
                     onChanged: (int? newValue) async {
                       if (newValue != null) {
                         setState(() {

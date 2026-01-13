@@ -1,7 +1,20 @@
 <?php
+// List of allowed domains
+$allowed_origins = [
+    "https://löschwasserförderung.at",
+    "https://xn--lschwasserfrderung-d3bk.at"
+];
+
+// Get the origin of the request
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+
+// If the origin is in the allowed list, set the CORS header
+if (in_array($origin, $allowed_origins)) {
+    header("Access-Control-Allow-Origin: $origin");
+}
+
 // Set CORS headers
 header('Content-Type: application/json; charset=utf-8');
-header('Access-Control-Allow-Origin: https://löschwasserförderung.at');
 header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 header('Access-Control-Allow-Credentials: true');
@@ -42,12 +55,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     try {
         // SMTP settings
         $mail->isSMTP();
-        $mail->Host = '<<<HOST>>>';
+        $mail->Host = 'w01f6a45.kasserver.com';
         $mail->SMTPAuth = true;
         $mail->Username = $domainEmail;
-        $mail->Password = '<<<PASSWORD>>>';
+        $mail->Password = 'asQyJYEx2reBAV5mYBoe';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-        $mail->Port = <<<PORT>>>;
+        $mail->Port = 587;
 
         // Set email headers
         $mail->setFrom($domainEmail, 'Support Formular');
@@ -55,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $mail->addAddress($domainEmail);
 
         // Set email content
-        $mail->isHTML(true);
+        $mail->isHTML();
         $mail->CharSet = 'UTF-8';
         $mail->Subject = $subject;
         $mail->Body = 'Nachricht von: ' . htmlspecialchars($from) . '<br><br>' . $body;

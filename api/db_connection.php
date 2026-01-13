@@ -7,10 +7,10 @@ if (basename($_SERVER['PHP_SELF']) === basename(__FILE__)) {
 }
 
 // Database connection variables
-$host     = '<<<HOST>>>';
-$database = '<<<DB>>>';
-$dbUser   = '<<<USER>>>';
-$dbPass   = '<<<PASSWORD>>>';
+$host = 'localhost';
+$database = 'd04280e9';
+$dbUser = 'd04280e9';
+$dbPass = 'W9u2idmeWTFstne3rNsx';
 
 // Create connection to database
 $conn = new mysqli($host, $dbUser, $dbPass, $database);

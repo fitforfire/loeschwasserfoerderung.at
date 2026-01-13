@@ -1,8 +1,21 @@
 <?php
+// List of allowed domains
+$allowed_origins = [
+    "https://löschwasserförderung.at",
+    "https://xn--lschwasserfrderung-d3bk.at"
+];
+
+// Get the origin of the request
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+
+// If the origin is in the allowed list, set the CORS header
+if (in_array($origin, $allowed_origins)) {
+    header("Access-Control-Allow-Origin: $origin");
+}
+
 
 // Set CORS headers
 header('Content-Type: application/json; charset=utf-8');
-header('Access-Control-Allow-Origin: https://löschwasserförderung.at');
 header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 header('Access-Control-Allow-Credentials: true');
@@ -26,9 +39,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Variables
     $emailId = $data['id'];
-    $mailServer = '{<<<ADDRESS>>>}INBOX';
-    $username = '<<<USERNAME>>>';
-    $password = '<<<PASSWORD>>>';
+    $mailServer = '{w01f6a45.kasserver.com:993/imap/ssl}INBOX';
+    $username = 'm07471d0';
+    $password = 'asQyJYEx2reBAV5mYBoe';
 
     // Connect to WebMail server
     $inbox = imap_open($mailServer, $username, $password);
@@ -53,6 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Close connection to WebMail server
     imap_close($inbox);
 } else {
-     echo Crypto::encrypt(json_encode(['error' => 'Ungültige Request-Methode']));
-     http_response_code(405);
+    echo Crypto::encrypt(json_encode(['error' => 'Ungültige Request-Methode']));
+    http_response_code(405);
 }

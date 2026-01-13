@@ -68,8 +68,8 @@ class CustomAutocompletionFieldState extends State<CustomAutocompletionField> {
   }
 
   //Handle Arrow Key Presses
-  void handleArrowKeys(RawKeyEvent event) {
-    if (event is RawKeyDownEvent) {
+  void handleArrowKeys(KeyEvent event) {
+    if (event is KeyDownEvent) {
       if (event.logicalKey == LogicalKeyboardKey.arrowDown) {
         setState(() {
           selectedIndex = (selectedIndex + 1) % filteredSuggestions.length;
@@ -95,9 +95,9 @@ class CustomAutocompletionFieldState extends State<CustomAutocompletionField> {
   //Build the Widget
   @override
   Widget build(BuildContext context) {
-    return RawKeyboardListener(
+    return KeyboardListener(
       focusNode: focusNode,
-      onKey: (event) => handleArrowKeys(event),
+      onKeyEvent: (event) => handleArrowKeys(event),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.white,

@@ -91,7 +91,7 @@ class SearchPageState extends State<SearchPage> {
                   borderRadius: BorderRadius.circular(12.0),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.grey.withOpacity(0.3),
+                      color: Colors.grey.withValues(alpha: 0.3),
                       blurRadius: 10,
                       offset: const Offset(0, 5),
                     ),
@@ -101,7 +101,7 @@ class SearchPageState extends State<SearchPage> {
                   children: [
                     // Dropdown for Search Type (Address, Courtname, Koordiantes)
                     DropdownButtonFormField<String>(
-                      value: selectedSearchType,
+                      initialValue: selectedSearchType,
                       decoration: InputDecoration(
                         labelText: 'Wählen Sie einen Suchtyp',
                         labelStyle: TextStyle(color: Colors.grey[800]),
@@ -504,7 +504,7 @@ class SearchPageState extends State<SearchPage> {
     loadingScreenShown = true;
     Navigator.of(context).push(PageRouteBuilder(
       opaque: false,
-      pageBuilder: (_, __, ___) => const LoadingScreen(),
+      pageBuilder: (_, _, _) => const LoadingScreen(),
     ));
   }
 

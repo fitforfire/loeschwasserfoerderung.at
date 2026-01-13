@@ -1,7 +1,20 @@
 <?php
+// List of allowed domains
+$allowed_origins = [
+    "https://löschwasserförderung.at",
+    "https://xn--lschwasserfrderung-d3bk.at"
+];
+
+// Get the origin of the request
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+
+// If the origin is in the allowed list, set the CORS header
+if (in_array($origin, $allowed_origins)) {
+    header("Access-Control-Allow-Origin: $origin");
+}
+
 // Cross-Origin Headers
 header('Content-Type: application/json; charset=utf-8');
-header('Access-Control-Allow-Origin: https://löschwasserförderung.at');
 header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 header('Access-Control-Allow-Credentials: true');

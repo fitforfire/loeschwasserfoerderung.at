@@ -48,7 +48,7 @@ class InfoPageState extends State<InfoPage> {
                         textAlign: TextAlign.center,
                       ),
                       //VideoPlayer
-                      VideoPlayerWidget(videoUrl: "https://xn--lschwasserfrderung-d3bk.at/trailer.mp4", volume: 20, width: 300, height: 200),
+                      VideoPlayerWidget(videoUrl: "https://xn--lschwasserfrderung-d3bk.at/trailer.mp4", volume: 10, width: 300, height: 200),
                       const SizedBox(height: 20.0),
                       //Service & Information - Headline
                       const Text(
@@ -702,7 +702,7 @@ class InfoPageState extends State<InfoPage> {
                       const SizedBox(height: 5.0),
                       //Version - Text
                       Text(
-                        "1.31.58",
+                        "1.31.60",
                         style: TextStyle(fontSize: 12.0),
                         textAlign: TextAlign.center,
                       ),

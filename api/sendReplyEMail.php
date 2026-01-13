@@ -1,7 +1,20 @@
 <?php
+// List of allowed domains
+$allowed_origins = [
+    "https://löschwasserförderung.at",
+    "https://xn--lschwasserfrderung-d3bk.at"
+];
+
+// Get the origin of the request
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+
+// If the origin is in the allowed list, set the CORS header
+if (in_array($origin, $allowed_origins)) {
+    header("Access-Control-Allow-Origin: $origin");
+}
+
 // Set CORS headers
 header('Content-Type: application/json; charset=utf-8');
-header('Access-Control-Allow-Origin: https://löschwasserförderung.at');
 header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 header('Access-Control-Allow-Credentials: true');
@@ -24,9 +37,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $inputData = json_decode($decryptedInputData, true);
 
     // Check if required fields are provided
-    if (isset($inputData['subject']) && isset($inputData['message']) && isset($inputData['to'])) {
+    if (isset($inputData['subject']) && isset($inputData['message']) && isset($inputData['to']) && isset($inputData['supportAgentName'])) {
         $domainEmail = 'support@xn--lschwasserfrderung-d3bk.at';
         $from = 'support@löschwasserförderung.at';
+        $supportAgent = $inputData['supportAgentName'];
         $subject = 'Antwort auf Ihre Supportanfrage "' . htmlspecialchars($inputData['subject']) . '" von löschwasserförderung.at';
         $body = htmlspecialchars($inputData['message']);
         $to = filter_var($inputData['to'], FILTER_VALIDATE_EMAIL);
@@ -36,12 +50,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         try {
             // SMTP settings
             $mail->isSMTP();
-            $mail->Host = '<<<HOST>>>';
+            $mail->Host = 'w01f6a45.kasserver.com';
             $mail->SMTPAuth = true;
             $mail->Username = $domainEmail;
-            $mail->Password = '<<<PASSWORD>>>';
+            $mail->Password = 'asQyJYEx2reBAV5mYBoe';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            $mail->Port = <<<POST>>>;
+            $mail->Port = 587;
 
             // Set email headers
             $mail->setFrom($domainEmail, 'Löschwasserförderung.at Support');
@@ -49,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $mail->addAddress($to);
 
             // Email content
-            $mail->isHTML(true);
+            $mail->isHTML();
             $mail->CharSet = 'UTF-8';
             $mail->Subject = $subject;
 
@@ -59,8 +73,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <p>Der Status Ihrer Supportmeldung an Löschwasserförderung.at ist:</p>
                 <p>' . nl2br($body) . '</p>
                 <div style="font-family: Arial, sans-serif; color: #ffffff; background-color: #1b6ec1; padding: 20px;">
-                    <p style="margin: 0; font-size: 16px; font-weight: bold;">Mit freundlichen Grüßen,<br />Support von 
-                    <a href="https://www.löschwasserförderung.at" target="_blank" rel="nofollow noopener" style="color: #ffffff; text-decoration: none;">Löschwasserförderung.at</a></p>
+                    <p style="margin: 0; font-size: 16px; font-weight: bold;">
+                        Mit kameradschaftlichen Grüßen,<br />
+                        ' . htmlspecialchars($supportAgent) . ' – Support von
+                        <a href="https://www.löschwasserförderung.at" target="_blank" rel="nofollow noopener" style="color: #ffffff; text-decoration: none;">Löschwasserförderung.at</a>
+                    </p>
                     <p style="margin: 0; font-size: 14px; font-style: italic; color: #b0b0b0;">Ein Projekt von 
                     <a href="https://www.team122.at" target="_blank" rel="nofollow noopener" style="color: #b0b0b0; text-decoration: none;">Team122.at</a></p>
                     <div style="margin-top: 15px;">
