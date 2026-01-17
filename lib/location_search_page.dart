@@ -20,7 +20,7 @@ class SearchPage extends StatefulWidget {
 //State for Search-Page
 class SearchPageState extends State<SearchPage> {
   // Variables
-  String? selectedSearchType = "Address";
+  String? selectedSearchType = "Adresse";
   Key reloadKey = UniqueKey();
   bool loadingScreenShown = false;
 
@@ -43,7 +43,7 @@ class SearchPageState extends State<SearchPage> {
   FocusNode lngFocusNode = FocusNode();
 
   //List-Variables
-  List<String> searchTypes = ['Address', 'Hofname', 'Koordinaten'];
+  List<String> searchTypes = ['Adresse', 'Hofname', 'Koordinaten'];
 
   Map<String, int> stateNumberMap = {
     'Burgenland': 1,
@@ -125,7 +125,7 @@ class SearchPageState extends State<SearchPage> {
                     SizedBox(height: 20),
 
                     //Conditional input fields based on the selected search type
-                    if (selectedSearchType == 'Address') ...[
+                    if (selectedSearchType == 'Adresse') ...[
                       //Fields for Address
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -283,7 +283,7 @@ class SearchPageState extends State<SearchPage> {
                     // Submit Button
                     ElevatedButton(
                       onPressed: () async {
-                        if (selectedSearchType == "Address") {
+                        if (selectedSearchType == "Adresse") {
                           await setSelectedAddressLocation(
                               streetNumbers[housenumberController.text]!);
                         } else if (selectedSearchType == "Hofname") {
