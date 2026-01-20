@@ -20,10 +20,11 @@ header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-W
 header('Access-Control-Allow-Credentials: true');
 
 //Include required scripts
-require './phpMailer/src/Exception.php';
-require './phpMailer/src/SMTP.php';
-require './phpMailer/src/PHPMailer.php';
-require_once 'crypto.php';
+require "./phpMailer/src/Exception.php";
+require "./phpMailer/src/SMTP.php";
+require "./phpMailer/src/PHPMailer.php";
+require_once "crypto.php";
+require_once "email_connection.php";
 
 // Import PHPMailer
 use PHPMailer\PHPMailer\PHPMailer;
@@ -50,10 +51,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         try {
             // SMTP settings
             $mail->isSMTP();
-            $mail->Host = 'w01f6a45.kasserver.com';
+            $mail->Host = $mailHost;
             $mail->SMTPAuth = true;
-            $mail->Username = $domainEmail;
-            $mail->Password = 'asQyJYEx2reBAV5mYBoe';
+            $mail->Username = $emailUsername;
+            $mail->Password = $emailPassword;
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 

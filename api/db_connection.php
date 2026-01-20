@@ -7,17 +7,17 @@ if (basename($_SERVER['PHP_SELF']) === basename(__FILE__)) {
 }
 
 // Database connection variables
-$host = 'localhost';
-$database = 'd04280e9';
-$dbUser = 'd04280e9';
-$dbPass = 'W9u2idmeWTFstne3rNsx';
+$host = '<<HOST>>';
+$database = '<<DB>>';
+$dbUser = '<<USER>>';
+$dbPass = '<PASSWORD>>';
 
 // Create connection to database
 $conn = new mysqli($host, $dbUser, $dbPass, $database);
 
 // Check connection
 if ($conn->connect_error) {
-    die(json_encode(["error" => "Datenbankverbindungs error: " . $conn->connect_error]));
+    die(json_encode(["error" => "DB Connection Error: " . $conn->connect_error]));
 }
 
 // Set UTF-8 character encoding

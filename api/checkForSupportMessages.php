@@ -20,8 +20,9 @@ header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-W
 header('Access-Control-Allow-Credentials: true');
 
 // Include required scripts
-require_once 'crypto.php';
-require_once 'db_connection.php';
+require_once "crypto.php";
+require_once "db_connection.php";
+require_once "email_connection.php";
 
 // Ensure request is POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -45,12 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $user_data = $result->fetch_assoc();
 
         if ($user_data && password_verify($password, $user_data['password']) && $user_data['admin'] === 1) {
-            // Webmail server access
-            $mailServer = '{w01f6a45.kasserver.com:993/imap/ssl}INBOX';
-            $emailUsername = 'm07471d0';
-            $emailPassword = 'asQyJYEx2reBAV5mYBoe';
-            $inbox = imap_open($mailServer, $emailUsername, $emailPassword);
-
             if ($inbox) {
                 // Search for emails
                 $emails = imap_search($inbox, 'ALL');

@@ -9,8 +9,8 @@ if (basename($_SERVER['PHP_SELF']) === basename(__FILE__)) {
 // AES-256-CBC encryption
 class Crypto
 {
-    private static $key = 'fGiyf2JwaVPb2xB6HTU6hhAIq86Lq8Xj'; // 32-byte KEY
-    private static $iv = 'XMXp8r8y496Y9RAt'; // 16-byte IV
+    private static $key = '<<KEY>>'; // 32-byte KEY
+    private static $iv = '<<IV>>'; // 16-byte IV
 
     // Encrypt
     public static function encrypt($data): string

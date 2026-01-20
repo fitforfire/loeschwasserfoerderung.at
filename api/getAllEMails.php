@@ -20,7 +20,8 @@ header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-W
 header('Access-Control-Allow-Credentials: true');
 
 // Include crypto script
-require_once 'crypto.php';
+require_once "crypto.php";
+require_once "email_connection.php";
 
 // Recursive function to fetch email body
 function getBody($inbox, $emailNumber, $structure = false, $partNumber = false) {
@@ -71,11 +72,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $decryptedInput = Crypto::decrypt($encryptedInput);
     $data = json_decode($decryptedInput, true);
 
-    $mailServer = '{w01f6a45.kasserver.com:993/imap/ssl}INBOX';
-    $username = 'm07471d0';
-    $password = 'asQyJYEx2reBAV5mYBoe';
-
-    $inbox = @imap_open($mailServer, $username, $password);
     if (!$inbox) {
         echo Crypto::encrypt(json_encode([
             'error' => 'Verbindung zum WebMail Server fehlgeschlagen: ' . imap_last_error()

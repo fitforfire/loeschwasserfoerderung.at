@@ -20,7 +20,7 @@ header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-W
 header('Access-Control-Allow-Credentials: true');
 
 // Include required scripts
-include('db_connection.php');
+require_once "db_connection.php";
 require_once "crypto.php";
 
 // Ensure request is POST
