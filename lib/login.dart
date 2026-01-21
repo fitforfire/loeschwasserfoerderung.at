@@ -192,9 +192,6 @@ class LoginPageState extends State<LoginPage> {
       return;
     }
 
-    //Encrypt Password (SHA 512)
-    password = sha512.convert(utf8.encode(password)).toString();
-
     //Get Data from API
     final url = "https://xn--lschwasserfrderung-d3bk.at/api/checkUser.php";
     try {

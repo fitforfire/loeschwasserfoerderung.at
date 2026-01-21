@@ -52,11 +52,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $user_data = $result->fetch_assoc();
 
         // Verify username and password
-        if ($user_data && $user_data['password'] === $password) {
+        if ($user_data && password_verify($password, $user_data['password'])) {
             // Successful login
             echo Crypto::encrypt(json_encode([
                 'login' => true,
-                'admin' => $user_data['admin'] === 1,
+                'admin' => ((int)$user_data['admin'] === 1),
             ]));
             http_response_code(200);  // OK
         } else {
@@ -64,6 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             echo Crypto::encrypt(json_encode([
                 'login' => false,
                 'admin' => false,
+                'error' => 'Ungültiger Benutzername oder Passwort'
             ]));
             http_response_code(401);
         }

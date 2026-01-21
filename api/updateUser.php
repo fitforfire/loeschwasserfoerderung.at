@@ -24,7 +24,7 @@ require_once "db_connection.php";
 require_once "crypto.php";
 
 // Ensure request is POST
-if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Decrypt the incoming request data
     $encryptedInput = file_get_contents("php://input");
     $decryptedInput = Crypto::decrypt($encryptedInput);
@@ -37,50 +37,43 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     $newPassword = $inputData["newPassword"] ?? "";
     $isAdmin = $inputData["isAdmin"] ?? "false";
 
-    // Validate input
-    if (empty($username) || empty($password) || empty($newUsername) || empty($newPassword)) {
-        echo Crypto::encrypt(json_encode(["error" => "Fehlende Eingabedaten"]));
-        http_response_code(400);
-        exit();
-    }
-
-    // Check if the user exists
-    $stmt = $conn->prepare("SELECT username FROM Login WHERE username = ? AND password = ?");
-    $stmt->bind_param("ss", $username, $password);
-    $stmt->execute();
-    $stmt->store_result();
-
-    // incorrect user credentials
-    if ($stmt->num_rows !== 1) {
+    try {
+        // 1. Fetch user by username
+        $stmt = $conn->prepare("SELECT password FROM Login WHERE username = ?");
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user_data = $result->fetch_assoc();
         $stmt->close();
-        echo Crypto::encrypt(json_encode(["error" => "Ungültiger Benutzername oder Passwort"]));
-        http_response_code(404);
-        exit();
-    }
 
-    //Close query
-    $stmt->close();
+        if (!$user_data || !password_verify($password, $user_data['password'])) {
+            echo Crypto::encrypt(json_encode(["error" => "Ungültiger Benutzername oder Passwort"]));
+            http_response_code(401);
+            exit();
+        }
 
-    // Convert isAmdi nto integer
-    $isAdmin = ($isAdmin === "true") ? 1 : 0;
+        // 2. Hash new password
+        $hashedNewPassword = password_hash($newPassword, PASSWORD_DEFAULT);
 
-    // Update user query
-    $stmt = $conn->prepare("UPDATE Login SET username = ?, password = ?, admin = ? WHERE username = ? AND password = ?");
-    $stmt->bind_param("ssisi", $newUsername, $newPassword, $isAdmin, $username, $password);
+        // 3. Update user
+        $stmt = $conn->prepare("UPDATE Login SET username = ?, password = ?, admin = ? WHERE username = ?");
+        $stmt->bind_param("ssis", $newUsername, $hashedNewPassword, $isAdmin, $username);
 
-    //Execute query
-    if ($stmt->execute() && $stmt->affected_rows > 0) {
+        if ($stmt->execute() && $stmt->affected_rows > 0) {
+            echo Crypto::encrypt(json_encode(["success" => "Benutzer erfolgreich aktualisiert"]));
+            http_response_code(200);
+        } else {
+            echo Crypto::encrypt(json_encode(["error" => "Keine Änderungen vorgenommen oder Benutzer nicht gefunden"]));
+            http_response_code(400);
+        }
+
         $stmt->close();
-        echo Crypto::encrypt(json_encode(["success" => "Benutzer erfolgreich aktualisiert"]));
-        http_response_code(200);
-        exit();
-    }
+        $conn->close();
 
-    // Close query and database connection
-    $stmt->close();
-    $conn->close();
-    echo Crypto::encrypt(json_encode(["error" => "Keine Änderungen vorgenommen oder Benutzer nicht gefunden"]));
-    http_response_code(400);
+    } catch (Exception $e) {
+        echo Crypto::encrypt(json_encode(["error" => "Datenbankfehler: " . $e->getMessage()]));
+        http_response_code(500);
+    }
 } else {
     echo Crypto::encrypt(json_encode(["error" => "Ungültige Request-Methode"]));
     http_response_code(405);

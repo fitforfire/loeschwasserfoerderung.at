@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $user_data = $result->fetch_assoc();
 
         // Verify user exists and password is correct
-        if ($user_data && $user_data['password'] === $password) {
+        if ($user_data && password_verify($password, $user_data['password'])) {
             // If yes, return encrypted token
 
             // Get Token from Database

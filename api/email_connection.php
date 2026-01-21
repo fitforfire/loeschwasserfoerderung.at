@@ -10,8 +10,8 @@ if (basename($_SERVER['PHP_SELF']) === basename(__FILE__)) {
 $mailHost = '<<HOST>>';
 $mailServer = '{<<HOST>>:<<PORT>>/imap/ssl}INBOX';
 $mailPort = <<PORT>>;
-$emailUsername = '<<USERNAME>>';
-$emailPassword = '<<PASSWORD>>';
+$emailUsername = '<<EMAIL_USERNAME>>';
+$emailPassword = '<<EMAIL_PASSWORD>>';
 
 // Try to open IMAP inbox connection
 $inbox = imap_open($mailServer, $emailUsername, $emailPassword);

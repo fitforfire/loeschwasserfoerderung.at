@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Convert isAdmin to integer
     $isAdmin = ($isAdmin === 'true') ? 1 : 0;
-
+    $user_password = password_hash($user_password, PASSWORD_DEFAULT);
     // Prepare SQL query for insertion
     $stmt = $conn->prepare("INSERT INTO Login (username, password, admin) VALUES (?, ?, ?)");
     $stmt->bind_param("ssi", $user_username, $user_password, $isAdmin);

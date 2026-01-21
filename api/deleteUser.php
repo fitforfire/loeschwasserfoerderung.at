@@ -42,18 +42,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     // Check if user exists
-    $stmt = $conn->prepare("SELECT username FROM Login WHERE username = ? AND password = ?");
-    $stmt->bind_param("ss", $username, $password);
+    $stmt = $conn->prepare("SELECT password FROM Login WHERE username = ?");
+    $stmt->bind_param("s", $username);
     $stmt->execute();
-    $stmt->store_result();
+    $result = $stmt->get_result();
+    $user_data = $result->fetch_assoc();
 
-    if ($stmt->num_rows === 1) {
-        // Close query and prepare delete query
+    if ($user_data && password_verify($password, $user_data['password'])) {
         $stmt->close();
-        $stmt = $conn->prepare("DELETE FROM Login WHERE username = ? AND password = ?");
-        $stmt->bind_param("ss", $username, $password);
+        $stmt = $conn->prepare("DELETE FROM Login WHERE username = ?");
+        $stmt->bind_param("s", $username);
 
-        // Check if executed right or error
         if ($stmt->execute()) {
             http_response_code(200);
             echo Crypto::encrypt(json_encode(['success' => 'Benutzer erfolgreich gelöscht']));
