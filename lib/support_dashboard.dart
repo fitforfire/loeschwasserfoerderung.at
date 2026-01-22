@@ -279,8 +279,7 @@ class DashboardPageState extends State<DashboardPage>
                                           );
                                         },
                                         onSubmitted: (value) {
-                                          String encryptedNewPassword =
-                                          user.encryptPassword(value);
+                                          String encryptedNewPassword = value;
                                           if (user.newPassword !=
                                               encryptedNewPassword) {
                                             setState(() {
@@ -293,9 +292,7 @@ class DashboardPageState extends State<DashboardPage>
                                         },
                                         onEditingComplete: () {
                                           String encryptedNewPassword =
-                                          user.encryptPassword(
-                                              passwordControllers[index]
-                                                  .text);
+                                              passwordControllers[index].text;
                                           if (user.newPassword !=
                                               encryptedNewPassword) {
                                             setState(() {

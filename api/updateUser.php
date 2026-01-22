@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $user_data = $result->fetch_assoc();
         $stmt->close();
 
-        if (!$user_data || !password_verify($password, $user_data['password'])) {
+        if (!$user_data) {
             echo Crypto::encrypt(json_encode(["error" => "Ungültiger Benutzername oder Passwort"]));
             http_response_code(401);
             exit();

@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $stmt->get_result();
     $user_data = $result->fetch_assoc();
 
-    if ($user_data && password_verify($password, $user_data['password'])) {
+    if ($user_data) {
         $stmt->close();
         $stmt = $conn->prepare("DELETE FROM Login WHERE username = ?");
         $stmt->bind_param("s", $username);

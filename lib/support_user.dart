@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:math';
-import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:loeschwasserfoerderung/crypto.dart';
@@ -100,11 +99,6 @@ class User {
         List.generate(12, (index) => allChars[random.nextInt(allChars.length)])
             .join();
 
-    final hashedPassword = encryptPassword(password);
-
-    // Update the password for the user
-    newPassword = hashedPassword;
-
     // Show the generated password in an AlertDialog
     showDialog(
       context: context,
@@ -126,13 +120,5 @@ class User {
         );
       },
     );
-  }
-
-  //Encrypt Password
-  String encryptPassword(String password) {
-    // Encrypt the password using SHA-512
-    final bytes = utf8.encode(password);
-    final digest = sha512.convert(bytes);
-    return digest.toString();
   }
 }

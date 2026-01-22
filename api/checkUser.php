@@ -38,8 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Variables
-    $username = trim($inputData['username']);
-    $password = trim($inputData['password']);
+    $username = $inputData['username'];
+    $password = $inputData['password'];
 
     try {
         // Prepare and execute query to find user by username
@@ -48,9 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->execute();
         $result = $stmt->get_result();
         $user_data = $result->fetch_assoc();
-
+		
         // Verify user exists and password is correct
-        if ($user_data && password_verify($password, $user_data['password'])) {
+		if ($user_data && password_verify($password, $user_data['password'])) {
             // If yes, return encrypted token
 
             // Get Token from Database

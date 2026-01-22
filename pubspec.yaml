@@ -3,7 +3,7 @@
 name: loeschwasserfoerderung
 description: "Applikation zur automatischen Berechnung von Relaisleitungen"
 publish_to: 'none'
-version: 1.32.61
+version: 1.33.62
 
 environment:
   sdk: ^3.7.2
@@ -42,7 +42,6 @@ dependencies:
   #Permissions
   permission_handler: ^12.0.1
   #Encrypt/Decrypt
-  crypto: ^3.0.7
   encrypt: ^5.0.3
   #Trailer
   media_kit: ^1.2.6

@@ -38,8 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     //Extract user credentials
-    $username = trim($inputData['username']);
-    $password = trim($inputData['password']);
+    $username = $inputData['username'];
+    $password = $inputData['password'];
 
     try {
         // Prepare and execute query to check user credentials

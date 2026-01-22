@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:crypto/crypto.dart';
-import 'dart:convert';
 import 'support_user.dart';
 import 'error_dialog.dart';
 
@@ -98,9 +96,7 @@ class AddUserDialogState extends State<AddUserDialog> {
                         passwordController.text.isNotEmpty) {
                       final newUser = User(
                         username: usernameController.text,
-                        password: sha512
-                            .convert(utf8.encode(passwordController.text))
-                            .toString(),
+                        password: passwordController.text,
                         expanded: false,
                         isAdmin: isAdmin,
                       );
