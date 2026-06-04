@@ -550,7 +550,7 @@ class InfoPageState extends State<InfoPage> {
                       ),
                       //Team - Development - Name
                       const ExternalLink(
-                        url: "https://stefanrautner.netlify.app",
+                        url: "https://stefanrautner.github.io/Portfolio/",
                         text: "Stefan Rautner (FF Kuchl)",
                       ),
                       const SizedBox(height: 15.0),
